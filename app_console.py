@@ -7,18 +7,15 @@ from logic import (
 def main():
     print("=== ACADEMIC PLANNER ===\n")
     
-    # Load data
     courses = load_courses()
     prereqs = load_prereqs()
     sections = load_sections()
     
-    # Step 1: Get completed courses
     print("Enter your completed courses (comma-separated codes):")
     print("Example: DECSC 31, ITMGT 45")
     completed_input = input("> ")
     completed = [c.strip() for c in completed_input.split(',') if c.strip()]
     
-    # Step 2: Check eligibility
     print("\n--- ELIGIBLE COURSES ---")
     eligibility = get_eligible_courses(completed, prereqs, courses)
     
@@ -26,7 +23,6 @@ def main():
         status = "OK" if is_eligible else f"NOT OK - Missing: {', '.join(missing)}"
         print(f"{code}: {status}")
     
-    # Step 3: Select sections
     print("\n--- SELECT SECTIONS ---")
     print("Available sections:")
     for i, sec in enumerate(sections):
@@ -37,7 +33,6 @@ def main():
     selected_indices = [int(x.strip()) for x in selected_input.split(',') if x.strip().isdigit()]
     selected_sections = [sections[i] for i in selected_indices if i < len(sections)]
     
-    # Step 4a: Re-check eligibility of selected sections
     print("\n--- ELIGIBILITY RE-CHECK FOR SELECTED SECTIONS ---")
     ineligible_selected = []
     for sec in selected_sections:
@@ -49,7 +44,6 @@ def main():
     if not ineligible_selected:
         print("All selected courses are eligible.")
     
-    # Step 4b: Check time conflicts
     print("\n--- CONFLICT CHECK ---")
     conflicts = check_conflicts(selected_sections)
     if conflicts:
@@ -58,7 +52,6 @@ def main():
     else:
         print("No conflicts detected.")
     
-    # Step 5: BFS unlock path
     print("\n--- COURSE PATH (BFS) ---")
     print("Enter a course code to see what it unlocks:")
     unlock_input = input("> ").strip()
