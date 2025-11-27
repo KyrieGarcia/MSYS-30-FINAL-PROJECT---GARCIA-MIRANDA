@@ -1,0 +1,14 @@
+{
+  "DECSC 31": {"title": "DECISION ANALYSIS", "units": 3},
+  "DECSC 33": {"title": "INTRO TO BUSINESS ANALYTICS", "units": 3},
+  "ITENT 120": {"title": "USER EXPERIENCE DESIGN", "units": 3},
+  "ITMGT 23.03": {"title": "IT PROTOTYPE DEVELOPMENT USING APPLE SWIFT", "units": 3},
+  "ITMGT 45": {"title": "THE DIGITAL ECONOMY", "units": 3},
+  "ITMGT 46": {"title": "MANAGING E-COMMERCE OPERATIONS", "units": 3},
+  "OPMAN 142": {"title": "PRODUCT DEVELOPMENT", "units": 3},
+  "OPMAN 160": {"title": "PROJECT MANAGEMENT FUNDAMENTALS", "units": 3},
+  "MSYS 60": {"title": "MIS GAMES AND STRATEGIES", "units": 3},
+  "OPMAN 161": {"title": "PROJECT MANAGEMENT TOOLS AND TECHNIQUES", "units": 3},
+  "ITMGT 45.03": {"title": "E-COMMERCE FUNDAMENTALS", "units": 3},
+  "ITMGT 125.1": {"title": "DECISION MAKING USING BUSINESS SIMULATIONS", "units": 3}
+}

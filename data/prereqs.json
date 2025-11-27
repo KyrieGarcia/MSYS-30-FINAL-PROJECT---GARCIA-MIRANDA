@@ -1,0 +1,14 @@
+{
+  "DECSC 31": [],
+  "DECSC 33": ["DECSC 31"],
+  "ITENT 120": [],
+  "ITMGT 23.03": [],
+  "ITMGT 45": [],
+  "ITMGT 46": ["ITMGT 45"],
+  "OPMAN 142": [],
+  "OPMAN 160": [],
+  "MSYS 60": [],
+  "OPMAN 161": ["OPMAN 160"],
+  "ITMGT 45.03": ["ITMGT 45"],
+  "ITMGT 125.1": ["DECSC 31"]
+}
