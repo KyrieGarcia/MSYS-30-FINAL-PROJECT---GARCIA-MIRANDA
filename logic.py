@@ -2,7 +2,6 @@ import json
 import csv
 from collections import deque
 
-# ============ DATA LOADING ============
 
 def load_courses(filepath="data/courses.json"):
     with open(filepath, 'r') as f:
@@ -20,7 +19,7 @@ def load_sections(filepath="data/sections.csv"):
             sections.append(row)
     return sections
 
-# ============ ALGORITHM 1: BINARY SEARCH ============
+# binary search
 
 def binary_search(sorted_list, target):
     low, high = 0, len(sorted_list) - 1
@@ -34,7 +33,7 @@ def binary_search(sorted_list, target):
             high = mid - 1
     return False
 
-# ============ ALGORITHM 2: PREREQUISITE ELIGIBILITY ============
+# prereq eligibility
 
 def check_eligibility(course_code, completed_courses, prereq_graph):
     required = prereq_graph.get(course_code, [])
@@ -53,7 +52,7 @@ def get_eligible_courses(completed_courses, prereq_graph, courses):
         eligibility[code] = (is_eligible, missing)
     return eligibility
 
-# ============ ALGORITHM 3: SCHEDULE CONFLICT DETECTION ============
+# detection sched conflict
 
 def parse_time(time_str):
     parts = time_str.strip().split()
@@ -81,18 +80,18 @@ def parse_time(time_str):
         elif day_range[0] == 'T' and day_range[1] == 'F':
             days = ['TUE', 'WED', 'THU', 'FRI']
     else:
-    # Single or multiple (e.g., "TF", "SAT")
+        
         i = 0
     while i < len(day_part):
-        # Check for 3-letter days first
+        
         if i + 2 < len(day_part) and day_part[i:i+3] == 'SAT':
             days.append('SAT')
             i += 3
-        # Check for 2-letter days
+  
         elif i + 1 < len(day_part) and day_part[i:i+2] == 'TH':
             days.append('THU')
             i += 2
-        # Single letter
+
         else:
             days.append(day_map.get(day_part[i], day_part[i]))
             i += 1
@@ -123,7 +122,7 @@ def check_conflicts(selected_sections):
                 conflicts.append((prev['course'], curr['course'], day))
     return conflicts
 
-# ============ ALGORITHM 4: BFS FOR COURSE PATH ============
+# bfs for course path
 
 def bfs_unlock_path(course_code, prereq_graph):
     reverse_graph = {}
