@@ -11,11 +11,12 @@ def main():
     prereqs = load_prereqs()
     sections = load_sections()
     
+    # Get completed courses
     print("Enter your completed courses (comma-separated codes):")
     print("Example: DECSC 31, ITMGT 45")
-    completed_input = input("> ")
-    completed = [c.strip() for c in completed_input.split(',') if c.strip()]
+    completed = [c.strip() for c in input("> ").split(',') if c.strip()]
     
+    # Show eligible courses
     print("\n--- ELIGIBLE COURSES ---")
     eligibility = get_eligible_courses(completed, prereqs, courses)
     
@@ -23,27 +24,29 @@ def main():
         status = "OK" if is_eligible else f"NOT OK - Missing: {', '.join(missing)}"
         print(f"{code}: {status}")
     
+    # Select sections
     print("\n--- SELECT SECTIONS ---")
     print("Available sections:")
     for i, sec in enumerate(sections):
         print(f"{i}. {sec['Code']} - {sec['Section']} ({sec['Time']})")
     
     print("\nEnter section numbers to add (comma-separated):")
-    selected_input = input("> ")
-    selected_indices = [int(x.strip()) for x in selected_input.split(',') if x.strip().isdigit()]
+    selected_indices = [int(x.strip()) for x in input("> ").split(',') if x.strip().isdigit()]
     selected_sections = [sections[i] for i in selected_indices if i < len(sections)]
     
+    # Check eligibility for selected sections
     print("\n--- ELIGIBILITY RE-CHECK FOR SELECTED SECTIONS ---")
-    ineligible_selected = []
-    for sec in selected_sections:
-        code = sec['Code']
-        is_eligible, missing = eligibility.get(code, (True, []))
-        if not is_eligible:
-            ineligible_selected.append((code, missing))
+    ineligible = [(sec['Code'], eligibility.get(sec['Code'], (True, []))[1]) 
+                  for sec in selected_sections 
+                  if not eligibility.get(sec['Code'], (True, []))[0]]
+    
+    if ineligible:
+        for code, missing in ineligible:
             print(f"WARNING: {code} is NOT eligible - Missing: {', '.join(missing)}")
-    if not ineligible_selected:
+    else:
         print("All selected courses are eligible.")
     
+    # Check for conflicts
     print("\n--- CONFLICT CHECK ---")
     conflicts = check_conflicts(selected_sections)
     if conflicts:
@@ -52,15 +55,15 @@ def main():
     else:
         print("No conflicts detected.")
     
+    # Show course unlocks
     print("\n--- COURSE PATH (BFS) ---")
     print("Enter a course code to see what it unlocks:")
     unlock_input = input("> ").strip()
+    
     if unlock_input in prereqs:
         unlocked = bfs_unlock_path(unlock_input, prereqs)
-        if unlocked:
-            print(f"{unlock_input} unlocks: {', '.join(unlocked)}")
-        else:
-            print(f"{unlock_input} does not unlock any other courses.")
+        print(f"{unlock_input} unlocks: {', '.join(unlocked)}" if unlocked 
+              else f"{unlock_input} does not unlock any other courses.")
     else:
         print("Course not found.")
 
